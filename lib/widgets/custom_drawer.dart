@@ -69,6 +69,7 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('Paso de Parámetros'),
             onTap: () {
               context.go('/paso_parametros');
+              Navigator.pop(context); // Cierra el drawer
             },
           ),
           ListTile(
@@ -76,6 +77,7 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('Ciclo de Vida'),
             onTap: () {
               context.go('/ciclo_vida');
+              Navigator.pop(context); // Cierra el drawer
             },
           ),
           //!FUTURE
@@ -84,6 +86,7 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('Future'),
             onTap: () {
               context.go('/future');
+              Navigator.pop(context); // Cierra el drawer
             },
           ),
           //!ISOLATE
@@ -92,6 +95,7 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('Isolate'),
             onTap: () {
               context.go('/isolate');
+              Navigator.pop(context); // Cierra el drawer
             },
           ),
           ListTile(
@@ -99,6 +103,15 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('POKEMON'),
             onTap: () {
               context.go('/pokemon');
+              Navigator.pop(context); // Cierra el drawer
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.restaurant),
+            title: const Text('COMIDAS'),
+            onTap: () {
+              context.go('/comidas');
+              Navigator.pop(context); // Cierra el drawer
             },
           ),
         ],

@@ -8,6 +8,8 @@ import '../views/home/home_screen.dart';
 import '../views/isolate/isolate_view.dart';
 import '../views/pokemons/pokemon_detail_view.dart';
 import '../views/pokemons/pokemon_list_view.dart';
+import '../views/comidas/comidas_detail_view.dart';
+import '../views/comidas/comidas_list_view.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -66,6 +68,22 @@ final GoRouter appRouter = GoRouter(
         final name =
             state.pathParameters['name']!; // se captura el nombre del pokemon.
         return PokemonDetailView(name: name);
+      },
+    ),
+    //!Ruta para COMIDAS
+    GoRoute(
+      path: '/comidas',
+      name: 'comidas',
+      builder: (context, state) => const ComidasListView(),
+    ),
+    //!Ruta para detalle de comidas
+    GoRoute(
+      path: '/comidas/:id', // se recibe el id de la comida como parametro
+      name: 'comidas_detail',
+      builder: (context, state) {
+        final id =
+            state.pathParameters['id']!; // se captura el id de la comida.
+        return ComidasDetailView(id: id);
       },
     ),
   ],

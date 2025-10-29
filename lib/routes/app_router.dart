@@ -10,9 +10,43 @@ import '../views/pokemons/pokemon_detail_view.dart';
 import '../views/pokemons/pokemon_list_view.dart';
 import '../views/comidas/comidas_detail_view.dart';
 import '../views/comidas/comidas_list_view.dart';
+import '../views/auth/login_screen.dart';
+import '../views/auth/register_screen.dart';
+import '../views/auth/profile_screen.dart';
+import '../services/auth_service_hybrid.dart';
 
 final GoRouter appRouter = GoRouter(
+  initialLocation: '/login',
+  redirect: (context, state) async {
+    final authService = AuthService();
+    final isLoggedIn = await authService.isLoggedIn();
+    
+    // Si está en login o register y ya está logueado, redirige al perfil
+    if ((state.matchedLocation == '/login' || state.matchedLocation == '/register') && isLoggedIn) {
+      return '/profile';
+    }
+    
+    // Si está en una ruta protegida y no está logueado, redirige a login
+    if (!isLoggedIn && state.matchedLocation != '/login' && state.matchedLocation != '/register') {
+      return '/login';
+    }
+    
+    return null; // No redirigir
+  },
   routes: [
+    // Rutas de autenticación
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterScreen(),
+    ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => const ProfileScreen(),
+    ),
     GoRoute(
       path: '/',
       builder: (context, state) => const HomeScreen(), // Usa HomeView

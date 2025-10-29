@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../services/auth_service.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -53,13 +54,9 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.person),
-            title: const Text('Perfil'),
+            title: const Text('Mi Perfil'),
             onTap: () {
-              //context.replace(String route)
-              //Similar a go(), pero en este caso reemplaza la ruta actual sin eliminar el historial anterior.
-              //Útil si quieres evitar que el usuario regrese a la pantalla anterior
-              //pero manteniendo la posibilidad de navegar hacia otras rutas en la pila
-              context.replace('/profile'); // Navega a la pantalla de perfil
+              context.go('/profile'); // Navega a la pantalla de perfil
               Navigator.pop(context); // Cierra el drawer
             },
           ),
@@ -112,6 +109,48 @@ class CustomDrawer extends StatelessWidget {
             onTap: () {
               context.go('/comidas');
               Navigator.pop(context); // Cierra el drawer
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.logout, color: Colors.red),
+            title: const Text('Cerrar Sesión', style: TextStyle(color: Colors.red)),
+            onTap: () async {
+              Navigator.pop(context); // Cierra el drawer primero
+              
+              // Mostrar dialog de confirmación
+              final confirm = await showDialog<bool>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Cerrar Sesión'),
+                  content: const Text('¿Estás seguro de que quieres cerrar sesión?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text('Cancelar'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      child: const Text('Cerrar Sesión'),
+                    ),
+                  ],
+                ),
+              );
+
+              if (confirm == true) {
+                final authService = AuthService();
+                await authService.logout();
+                
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Sesión cerrada exitosamente'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  context.go('/login');
+                }
+              }
             },
           ),
         ],

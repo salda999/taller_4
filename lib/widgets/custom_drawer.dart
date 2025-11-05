@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../services/auth_service.dart';
+import 'package:parqueadero_2025_g2/services/auth_service.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -153,6 +153,38 @@ class CustomDrawer extends StatelessWidget {
               }
             },
           ),
+          ListTile( 
+            leading: const Icon(Icons.cloud), 
+            title: const Text('Categorías Firebase'), 
+            onTap: () {
+              context.pushNamed('categoriasFirebase');
+              Navigator.pop(context);
+            }, 
+          ),
+          ListTile(
+            leading: const Icon(Icons.school),
+            title: const Text('Universidades'),
+            onTap: () {
+              context.go('/universidades');
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.analytics, color: Colors.purple),
+            title: const Text('Evidencia Universidad', style: TextStyle(color: Colors.purple)),
+            onTap: () {
+              context.go('/universidades/evidencia');
+              Navigator.pop(context);
+            },
+          ), 
+          ListTile(
+            leading: const Icon(Icons.bug_report, color: Colors.orange),
+            title: const Text('Debug Firebase', style: TextStyle(color: Colors.orange)),
+            onTap: () {
+              context.push('/firebase-debug');
+              Navigator.pop(context);
+            },
+          ), 
         ],
       ),
     );

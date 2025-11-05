@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:parqueadero_2025_g2/views/categoria_fb/categoria_fb_form_view.dart';
+import 'package:parqueadero_2025_g2/views/categoria_fb/categoria_fb_list_view.dart';
 import 'package:parqueadero_2025_g2/views/ciclo_vida/ciclo_vida_screen.dart';
 import 'package:parqueadero_2025_g2/views/paso_parametros/detalle_screen.dart';
 import 'package:parqueadero_2025_g2/views/paso_parametros/paso_parametros_screen.dart';
@@ -13,6 +15,10 @@ import '../views/comidas/comidas_list_view.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/register_screen.dart';
 import '../views/auth/profile_screen.dart';
+import '../views/categoria_fb/firebase_debug_view.dart';
+import '../views/universidades/list_universidad_view.dart';
+import '../views/universidades/create_universidad_view.dart';
+import '../views/universidades/universidad_evidencia_view.dart';
 import '../services/auth_service_hybrid.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -119,6 +125,54 @@ final GoRouter appRouter = GoRouter(
             state.pathParameters['id']!; // se captura el id de la comida.
         return ComidasDetailView(id: id);
       },
+    ),
+        GoRoute( 
+      path: '/categoriasFirebase', 
+      name: 'categoriasFirebase', 
+      builder: (_, __) => const CategoriaFbListView(), 
+    ), 
+    GoRoute( 
+      path: '/categoriasfb/create', 
+      name: 'categoriasfb.create', 
+      builder: (context, state) => const CategoriaFbFormView(), 
+    ), 
+    GoRoute( 
+      path: '/categoriasfb/edit/:id', 
+      name: 'categorias.edit', 
+      builder: (context, state) { 
+        final id = state.pathParameters['id']!; 
+        return CategoriaFbFormView(id: id); 
+      }, 
+    ), 
+    GoRoute(
+      path: '/firebase-debug',
+      name: 'firebase-debug',
+      builder: (context, state) => const FirebaseDebugView(),
+    ), 
+    // Rutas para Universidades
+    GoRoute(
+      path: '/universidades',
+      name: 'universidades',
+      builder: (context, state) => const ListUniversidadesView(),
+    ),
+    GoRoute(
+      path: '/universidades/create',
+      name: 'universidades.create',
+      builder: (context, state) => const CreateUniversidadView(),
+    ),
+    GoRoute(
+      path: '/universidades/edit/:id',
+      name: 'universidades.edit',
+      builder: (context, state) {
+        // Nota: Para implementar completamente la edición por ID, 
+        // necesitarías obtener la universidad desde Firebase con el ID
+        return const CreateUniversidadView();
+      },
+    ),
+    GoRoute(
+      path: '/universidades/evidencia',
+      name: 'universidades.evidencia',
+      builder: (context, state) => const UniversidadEvidenciaView(),
     ),
   ],
 );
